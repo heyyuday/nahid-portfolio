@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Search, Filter, Star, ExternalLink, ShoppingCart, Laugh, BookOpen, Award, TrendingUp } from 'lucide-react'
 import Image from 'next/image'
+import Newsletter from '../../components/Newsletter'
 
 export default function Books() {
   const [searchQuery, setSearchQuery] = useState('')
@@ -383,6 +384,9 @@ export default function Books() {
           </div>
         </div>
       </section>
+
+      {/* Newsletter Section */}
+      <Newsletter />
 
       {/* Buy Modal */}
       <AnimatePresence>
