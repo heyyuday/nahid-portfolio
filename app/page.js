@@ -111,7 +111,7 @@ export default function Home() {
             >
               <div className="relative w-full aspect-square rounded-3xl overflow-hidden shadow-2xl">
                 <Image
-                  src="https:///images/hero-photo.jpg"
+                  src="/images/hero-photo.jpg"
                   alt="Nahid Ashraf Uday"
                   fill
                   className="object-cover"
@@ -184,7 +184,7 @@ export default function Home() {
               className="relative h-96 rounded-3xl overflow-hidden shadow-xl"
             >
               <Image
-                src="https:///images/hero-photo.jpg"
+                src="/images/hero-photo.jpg"
                 alt="Writing desk"
                 fill
                 className="object-cover"
