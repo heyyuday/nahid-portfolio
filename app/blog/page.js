@@ -1,128 +1,115 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useState } from 'react'
+import { Calendar, Clock, ArrowRight, BookOpen, TrendingUp, Tag } from 'lucide-react'
 import Link from 'next/link'
-import { Calendar, Clock, ArrowRight, Search } from 'lucide-react'
-import Newsletter from '../../components/Newsletter'
 
 export default function Blog() {
-  const [searchTerm, setSearchTerm] = useState('')
-
-  // Sample blog posts - replace with actual data from CMS/database
-  const blogPosts = [
+  const posts = [
     {
       id: 1,
-      title: 'The Art of Crafting Compelling Characters',
-      excerpt: 'Discover the secrets to creating characters that readers fall in love with and remember long after they finish your book.',
-      date: '2024-03-15',
-      readTime: '8 min read',
-      category: 'Writing Tips',
-      image: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=600'
+      title: '10 Tips for Writing Viral Facebook Content in Bangladesh',
+      excerpt: 'Learn the secrets to creating engaging social media posts that resonate with Bangladeshi audiences and drive real engagement.',
+      category: 'Facebook Marketing',
+      date: 'March 15, 2024',
+      readTime: '5 min read',
+      image: '/images/blog-1.jpg',
+      slug: 'viral-facebook-content-bangladesh'
     },
     {
       id: 2,
-      title: 'Finding Your Unique Writing Voice',
-      excerpt: 'Every writer has a unique voice waiting to be discovered. Here\'s how to find yours and make it stand out.',
-      date: '2024-03-10',
-      readTime: '6 min read',
-      category: 'Writing Tips',
-      image: 'https://images.unsplash.com/photo-1471107340929-a87cd0f5b5f3?w=600'
+      title: 'The Art of Bengali Copywriting: Speaking to Your Audience',
+      excerpt: 'Discover how to craft compelling copy in Bengali that connects emotionally and drives action from your target market.',
+      category: 'Copywriting',
+      date: 'March 10, 2024',
+      readTime: '7 min read',
+      image: '/images/blog-2.jpg',
+      slug: 'bengali-copywriting-guide'
     },
     {
       id: 3,
-      title: 'Behind the Scenes: Writing "The Silent Echo"',
-      excerpt: 'An inside look at the creative process, challenges, and inspirations behind my latest novel.',
-      date: '2024-03-05',
+      title: 'How I Became a Published Author at 25',
+      excerpt: 'My journey from aspiring writer to published Bengali author. Lessons learned and advice for new writers.',
+      category: 'Writing Journey',
+      date: 'March 5, 2024',
       readTime: '10 min read',
-      category: 'Behind the Scenes',
-      image: 'https://images.unsplash.com/photo-1516414447565-b14be0adf13e?w=600'
+      image: '/images/blog-3.jpg',
+      slug: 'journey-to-published-author'
     },
     {
       id: 4,
-      title: '5 Content Writing Mistakes to Avoid',
-      excerpt: 'Common pitfalls that can undermine your content marketing efforts and how to steer clear of them.',
-      date: '2024-02-28',
-      readTime: '7 min read',
-      category: 'Content Marketing',
-      image: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=600'
+      title: 'SEO Content Writing for Bangladeshi Businesses',
+      excerpt: 'A complete guide to creating content that ranks on Google while engaging your local audience.',
+      category: 'Content Writing',
+      date: 'February 28, 2024',
+      readTime: '8 min read',
+      image: '/images/blog-4.jpg',
+      slug: 'seo-content-writing-guide'
     },
     {
       id: 5,
-      title: 'The Power of Storytelling in Marketing',
-      excerpt: 'Why stories sell better than facts, and how to harness storytelling in your marketing strategy.',
-      date: '2024-02-20',
-      readTime: '9 min read',
-      category: 'Content Marketing',
-      image: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600'
+      title: 'Social Media Marketing Trends in Bangladesh 2024',
+      excerpt: 'Stay ahead of the curve with these emerging trends in Bangladeshi social media marketing.',
+      category: 'Facebook Marketing',
+      date: 'February 20, 2024',
+      readTime: '6 min read',
+      image: '/images/blog-5.jpg',
+      slug: 'social-media-trends-2024'
     },
     {
       id: 6,
-      title: 'Building a Writing Routine That Works',
-      excerpt: 'Practical strategies for establishing a consistent writing practice, even with a busy schedule.',
-      date: '2024-02-15',
-      readTime: '5 min read',
-      category: 'Productivity',
-      image: 'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=600'
-    },
+      title: 'Writing Humor: Lessons from Humayun Ahmed',
+      excerpt: 'How the legendary author influenced my writing style and what we can all learn from his approach.',
+      category: 'Writing Journey',
+      date: 'February 15, 2024',
+      readTime: '9 min read',
+      image: '/images/blog-6.jpg',
+      slug: 'lessons-from-humayun-ahmed'
+    }
   ]
 
-  const filteredPosts = blogPosts.filter(post =>
-    post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    post.excerpt.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    post.category.toLowerCase().includes(searchTerm.toLowerCase())
-  )
-
-  const categories = [...new Set(blogPosts.map(post => post.category))]
+  const categories = ['All', 'Facebook Marketing', 'Copywriting', 'Content Writing', 'Writing Journey']
 
   return (
     <>
-      {/* Hero Section */}
-      <section className="section-padding bg-gradient-to-br from-white via-blue-50 to-white">
-        <div className="container-custom">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center max-w-4xl mx-auto"
-          >
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 text-primary">
+      {/* Hero */}
+      <section className="pt-32 pb-20 bg-white">
+        <div className="container mx-auto px-6 lg:px-12">
+          <div className="max-w-4xl mx-auto text-center">
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="text-5xl lg:text-7xl font-bold text-gray-900 mb-6"
+            >
               Blog
-            </h1>
-            <p className="text-2xl text-secondary leading-relaxed mb-8">
-              Insights on writing, storytelling, content creation, and the creative process.
-            </p>
-
-            {/* Search */}
-            <div className="relative max-w-2xl mx-auto">
-              <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-secondary" size={24} />
-              <input
-                type="text"
-                placeholder="Search articles..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-16 pr-6 py-5 rounded-full border-2 border-gray-200 focus:border-accent outline-none text-lg shadow-lg"
-              />
-            </div>
-          </motion.div>
+            </motion.h1>
+            
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="text-xl text-gray-500 leading-relaxed"
+            >
+              Insights on writing, marketing, and Bengali literature. Tips and stories from a professional copywriter and published author.
+            </motion.p>
+          </div>
         </div>
       </section>
 
       {/* Categories */}
-      <section className="section-padding bg-[#f5f5f7]">
-        <div className="container-custom">
-          <div className="flex flex-wrap gap-3 justify-center">
+      <section className="py-12 bg-gray-50">
+        <div className="container mx-auto px-6 lg:px-12">
+          <div className="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto">
             {categories.map((category, index) => (
               <motion.button
                 key={category}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.3, delay: index * 0.05 }}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-6 py-3 bg-white rounded-full font-medium text-primary hover:bg-accent hover:text-white transition-all shadow-md"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: index * 0.05 }}
+                className="px-6 py-3 bg-white border-2 border-gray-200 text-gray-700 rounded-full font-semibold hover:border-gray-900 hover:text-gray-900 transition-all"
               >
+                <Tag className="inline mr-2" size={16} />
                 {category}
               </motion.button>
             ))}
@@ -131,128 +118,78 @@ export default function Blog() {
       </section>
 
       {/* Blog Posts Grid */}
-      <section className="section-padding">
-        <div className="container-custom">
-          {filteredPosts.length > 0 ? (
-            <>
-              {/* Featured Post */}
-              <motion.div
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-6 lg:px-12">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+            {posts.map((post, index) => (
+              <motion.article
+                key={post.id}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="mb-16"
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileHover={{ y: -8 }}
+                className="bg-white rounded-3xl overflow-hidden border-2 border-gray-100 hover:border-gray-900 transition-all group"
               >
-                <Link href={`/blog/${filteredPosts[0].id}`}>
-                  <div className="grid lg:grid-cols-2 gap-8 items-center card hover:shadow-2xl transition-shadow p-8 group">
-                    <div className="relative h-96 rounded-2xl overflow-hidden">
-                      <img
-                        src={filteredPosts[0].image}
-                        alt={filteredPosts[0].title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
+                {/* Placeholder Image */}
+                <div className="relative h-64 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+                  <BookOpen size={64} className="text-gray-300" />
+                </div>
+
+                <div className="p-6">
+                  <div className="inline-block bg-gray-100 text-gray-900 px-3 py-1 rounded-full text-sm font-bold mb-4">
+                    {post.category}
+                  </div>
+
+                  <h2 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-gray-700 transition-colors">
+                    {post.title}
+                  </h2>
+
+                  <p className="text-gray-600 mb-4 leading-relaxed">
+                    {post.excerpt}
+                  </p>
+
+                  <div className="flex items-center gap-4 text-sm text-gray-500 mb-4">
+                    <div className="flex items-center gap-1">
+                      <Calendar size={16} />
+                      <span>{post.date}</span>
                     </div>
-                    <div>
-                      <div className="inline-block px-4 py-1 bg-accent text-white rounded-full text-sm font-medium mb-4">
-                        Featured
-                      </div>
-                      <h2 className="text-4xl font-bold text-primary mb-4 group-hover:text-accent transition-colors">
-                        {filteredPosts[0].title}
-                      </h2>
-                      <p className="text-lg text-secondary mb-6 leading-relaxed">
-                        {filteredPosts[0].excerpt}
-                      </p>
-                      <div className="flex items-center gap-6 text-secondary mb-6">
-                        <div className="flex items-center gap-2">
-                          <Calendar size={18} />
-                          <span>{new Date(filteredPosts[0].date).toLocaleDateString('en-US', { 
-                            month: 'short', 
-                            day: 'numeric', 
-                            year: 'numeric' 
-                          })}</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Clock size={18} />
-                          <span>{filteredPosts[0].readTime}</span>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2 text-accent font-semibold group-hover:gap-4 transition-all">
-                        Read Article
-                        <ArrowRight size={20} />
-                      </div>
+                    <div className="flex items-center gap-1">
+                      <Clock size={16} />
+                      <span>{post.readTime}</span>
                     </div>
                   </div>
-                </Link>
-              </motion.div>
 
-              {/* Other Posts */}
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {filteredPosts.slice(1).map((post, index) => (
-                  <motion.article
-                    key={post.id}
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                  >
-                    <Link href={`/blog/${post.id}`}>
-                      <div className="card group h-full flex flex-col">
-                        <div className="relative h-48 overflow-hidden">
-                          <img
-                            src={post.image}
-                            alt={post.title}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                          />
-                          <div className="absolute top-4 left-4 px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-sm font-medium text-primary">
-                            {post.category}
-                          </div>
-                        </div>
-                        <div className="p-6 flex-1 flex flex-col">
-                          <h3 className="text-2xl font-bold text-primary mb-3 group-hover:text-accent transition-colors line-clamp-2">
-                            {post.title}
-                          </h3>
-                          <p className="text-secondary mb-4 line-clamp-3 flex-1">
-                            {post.excerpt}
-                          </p>
-                          <div className="flex items-center gap-4 text-sm text-secondary mb-4">
-                            <div className="flex items-center gap-1">
-                              <Calendar size={16} />
-                              <span>{new Date(post.date).toLocaleDateString('en-US', { 
-                                month: 'short', 
-                                day: 'numeric' 
-                              })}</span>
-                            </div>
-                            <div className="flex items-center gap-1">
-                              <Clock size={16} />
-                              <span>{post.readTime}</span>
-                            </div>
-                          </div>
-                          <div className="flex items-center gap-2 text-accent font-semibold group-hover:gap-4 transition-all">
-                            Read More
-                            <ArrowRight size={18} />
-                          </div>
-                        </div>
-                      </div>
-                    </Link>
-                  </motion.article>
-                ))}
-              </div>
-            </>
-          ) : (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="text-center py-20"
+                  <div className="inline-flex items-center gap-2 text-gray-900 font-semibold group-hover:gap-3 transition-all">
+                    Read More
+                    <ArrowRight size={20} />
+                  </div>
+                </div>
+              </motion.article>
+            ))}
+          </div>
+
+          {/* Coming Soon Message */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mt-16 p-12 bg-gray-50 rounded-3xl max-w-2xl mx-auto"
+          >
+            <TrendingUp size={48} className="mx-auto text-gray-400 mb-4" />
+            <h3 className="text-2xl font-bold text-gray-900 mb-3">More Posts Coming Soon!</h3>
+            <p className="text-gray-600 mb-6">
+              I'm working on new articles about copywriting, Facebook marketing, and Bengali literature. Subscribe to my newsletter to get notified.
+            </p>
+            <Link
+              href="/#newsletter"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-gray-900 text-white rounded-full font-semibold hover:bg-gray-800 transition-colors"
             >
-              <p className="text-2xl text-secondary">
-                No articles found matching your search.
-              </p>
-            </motion.div>
-          )}
+              Subscribe to Newsletter
+            </Link>
+          </motion.div>
         </div>
       </section>
-
-      {/* Newsletter */}
-      <Newsletter />
     </>
   )
 }

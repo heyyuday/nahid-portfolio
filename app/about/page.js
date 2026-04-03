@@ -2,81 +2,79 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import { Award, BookOpen, Users, Calendar, Target, Heart } from 'lucide-react'
+import Link from 'next/link'
+import { BookOpen, Award, Globe, Heart, TrendingUp, Users, Star, MapPin, GraduationCap, Briefcase } from 'lucide-react'
 
 export default function About() {
   const timeline = [
-    { year: '2013', event: 'Started professional writing career', icon: Calendar },
-    { year: '2015', event: 'Published first novel "The Beginning"', icon: BookOpen },
-    { year: '2018', event: 'Won Best New Author Award', icon: Award },
-    { year: '2020', event: 'Reached 10,000+ readers milestone', icon: Users },
-    { year: '2022', event: 'Launched content writing services', icon: Target },
-    { year: '2024', event: 'Published 15th book', icon: Heart },
-  ]
-
-  const achievements = [
-    'Best New Author Award 2018',
-    'Featured in Jugantor Literary Magazine',
-    'Top 10 Bengali Authors (Protidiner Bangladesh)',
-    '50,000+ Books Sold',
-    'Content Creator for Major Brands',
-    'Guest Speaker at Writing Workshops',
+    { year: '1998', event: 'Born in Brahmanbaria, Bangladesh', icon: MapPin },
+    { year: '2018', event: 'Started professional writing career', icon: Briefcase },
+    { year: '2023', event: 'Published "Hawai Mithai" at Ekushey Book Fair', icon: BookOpen },
+    { year: '2023', event: 'Published "Paap Ebong Punno"', icon: BookOpen },
+    { year: '2024', event: 'Pursuing Master\'s at University of Adelaide', icon: GraduationCap },
   ]
 
   const values = [
     {
-      icon: BookOpen,
-      title: 'Storytelling Excellence',
-      description: 'Every word crafted with precision and passion to create immersive narratives.'
-    },
-    {
       icon: Heart,
-      title: 'Authentic Connection',
-      description: 'Building genuine relationships with readers through honest, relatable content.'
+      title: 'Authentic Storytelling',
+      description: 'Creating genuine Bengali narratives that resonate with readers and reflect our culture',
     },
     {
-      icon: Target,
-      title: 'Creative Innovation',
-      description: 'Constantly exploring new perspectives and pushing creative boundaries.'
+      icon: Award,
+      title: 'Excellence in Craft',
+      description: 'Commitment to producing high-quality content that exceeds expectations',
     },
+    {
+      icon: Users,
+      title: 'Client Success',
+      description: 'Helping Bangladeshi businesses grow through strategic content and marketing',
+    },
+  ]
+
+  const achievements = [
+    { number: '4.56★', label: 'Goodreads Rating' },
+    { number: '2', label: 'Published Books' },
+    { number: '5K+', label: 'Readers Worldwide' },
+    { number: '100+', label: 'Happy Clients' },
   ]
 
   return (
     <>
       {/* Hero Section */}
-      <section className="section-padding bg-gradient-to-br from-white via-blue-50 to-white">
-        <div className="container-custom">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center max-w-4xl mx-auto"
-          >
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 text-primary">
+      <section className="pt-32 pb-20 bg-white">
+        <div className="container mx-auto px-6 lg:px-12">
+          <div className="max-w-4xl mx-auto text-center mb-16">
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="text-5xl lg:text-7xl font-bold text-gray-900 mb-6"
+            >
               About Me
-            </h1>
-            <p className="text-2xl text-secondary leading-relaxed">
-              Author, storyteller, and creative mind dedicated to crafting narratives that inspire and transform.
-            </p>
-          </motion.div>
-        </div>
-      </section>
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="text-xl text-gray-500 leading-relaxed"
+            >
+              Bangladeshi author, professional copywriter, and Facebook marketing expert passionate about Bengali literature and helping businesses grow
+            </motion.p>
+          </div>
 
-      {/* Biography Section */}
-      <section className="section-padding">
-        <div className="container-custom">
-          <div className="grid lg:grid-cols-2 gap-12 items-start">
+          {/* Main Content Grid */}
+          <div className="grid lg:grid-cols-2 gap-16 items-center max-w-6xl mx-auto mb-20">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="sticky top-24"
             >
-              <div className="relative w-full aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl">
+              <div className="relative aspect-square rounded-3xl overflow-hidden bg-gray-100">
                 <Image
-                  src="/images/hero-photo2.jpg"
-                  alt="Nahid Ashraf Uday"
+                  src="/images/hero-photo.jpg"
+                  alt="Nahid Ashraf Uday - Best Bengali Author Bangladesh"
                   fill
                   className="object-cover"
                 />
@@ -88,117 +86,89 @@ export default function About() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="space-y-6 text-lg text-secondary leading-relaxed"
             >
-              <h2 className="text-4xl font-bold text-primary mb-6">My Journey</h2>
+              <h2 className="text-4xl font-bold text-gray-900 mb-6">
+                Nahid Ashraf Uday
+              </h2>
               
-              <p>
-                From a young age, I discovered the magic of words and their power to transport minds 
-                to different worlds. What began as scribbles in notebooks evolved into a lifelong 
-                passion for storytelling that has defined my career and purpose.
+              <p className="text-lg text-gray-600 mb-4 leading-relaxed">
+                Born on <strong className="text-gray-900">August 21, 1998</strong> in <strong className="text-gray-900">Brahmanbaria</strong>, raised in <strong className="text-gray-900">Dhaka</strong>, I discovered my passion for storytelling at a young age. Deeply influenced by the legendary <strong className="text-gray-900">Humayun Ahmed</strong>, I developed a unique voice that blends gentle humor with sharp social satire.
               </p>
 
-              <p>
-                Over the past decade, I've had the privilege of publishing 15+ books spanning various 
-                genres—from contemporary fiction to thought-provoking non-fiction. Each work represents 
-                countless hours of research, writing, and refining, driven by an unwavering commitment 
-                to quality and authenticity.
+              <p className="text-lg text-gray-600 mb-4 leading-relaxed">
+                My debut at the <strong className="text-gray-900">2023 Ekushey Book Fair</strong> introduced readers to my sarcastic yet thoughtful approach to Bengali literature. <strong className="text-gray-900">"Hawai Mithai"</strong> earned a <strong className="text-gray-900">4.56★ rating</strong> on Goodreads, establishing me as a fresh voice in Bangladeshi writing.
               </p>
 
-              <p>
-                My writing journey extends beyond books. As a professional content writer and copywriter, 
-                I've collaborated with leading brands and publications across Bangladesh, creating 
-                compelling content that resonates with diverse audiences. Whether it's crafting engaging 
-                blog posts, persuasive marketing copy, or thought leadership articles, I bring the same 
-                dedication to excellence.
+              <p className="text-lg text-gray-600 mb-6 leading-relaxed">
+                Beyond writing books, I help Bangladeshi businesses grow as a <strong className="text-gray-900">professional copywriter</strong> and <strong className="text-gray-900">Facebook marketing expert</strong>. Currently pursuing my <strong className="text-gray-900">Master's degree at the University of Adelaide, Australia</strong>, I continue to create content that resonates with Bengali readers worldwide.
               </p>
 
-              <p>
-                What drives me isn't just the act of writing—it's the connection formed with readers. 
-                Every piece of feedback, every shared story, every moment when words bridge the gap 
-                between strangers, reinforces why I do what I do.
-              </p>
-
-              <p>
-                Beyond writing, I'm passionate about mentoring aspiring authors, conducting workshops, 
-                and contributing to the literary community. I believe in the transformative power of 
-                stories and the responsibility we hold as storytellers to create meaningful, impactful content.
-              </p>
+              <Link
+                href="/books"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white rounded-full font-semibold hover:bg-gray-800 transition-colors"
+              >
+                <BookOpen size={20} />
+                Read My Books
+              </Link>
             </motion.div>
           </div>
-        </div>
-      </section>
 
-      {/* Values Section */}
-      <section className="section-padding bg-[#f5f5f7]">
-        <div className="container-custom">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">
-              What I Stand For
-            </h2>
-            <p className="text-xl text-secondary max-w-2xl mx-auto">
-              The principles that guide every story I write
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {values.map((value, index) => (
+          {/* Achievements */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 max-w-4xl mx-auto mb-20">
+            {achievements.map((item, index) => (
               <motion.div
-                key={value.title}
-                initial={{ opacity: 0, y: 30 }}
+                key={item.label}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="bg-white p-8 rounded-2xl shadow-lg"
+                className="text-center"
               >
-                <value.icon size={48} className="text-accent mb-4" />
-                <h3 className="text-2xl font-bold text-primary mb-3">{value.title}</h3>
-                <p className="text-secondary leading-relaxed">{value.description}</p>
+                <div className="text-4xl lg:text-5xl font-bold text-gray-900 mb-2">
+                  {item.number}
+                </div>
+                <div className="text-gray-500 font-medium">{item.label}</div>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Timeline Section */}
-      <section className="section-padding">
-        <div className="container-custom">
+      {/* Timeline */}
+      <section className="py-20 bg-gray-50">
+        <div className="container mx-auto px-6 lg:px-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">
-              Milestones
+            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+              My Journey
             </h2>
-            <p className="text-xl text-secondary">
-              Key moments in my writing journey
+            <p className="text-xl text-gray-500">
+              From Brahmanbaria to becoming a published Bengali author
             </p>
           </motion.div>
 
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-3xl mx-auto">
             {timeline.map((item, index) => (
               <motion.div
-                key={item.year}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
+                key={index}
+                initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="relative pl-8 pb-12 border-l-2 border-accent last:pb-0"
+                className="flex gap-6 mb-12 last:mb-0"
               >
-                <div className="absolute left-0 top-0 -translate-x-1/2 w-4 h-4 rounded-full bg-accent border-4 border-white" />
-                <div className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-shadow">
-                  <div className="flex items-center gap-4 mb-2">
-                    <item.icon size={24} className="text-accent" />
-                    <span className="text-2xl font-bold text-accent">{item.year}</span>
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 bg-gray-900 rounded-full flex items-center justify-center">
+                    <item.icon size={20} className="text-white" />
                   </div>
-                  <p className="text-lg text-primary font-medium">{item.event}</p>
+                </div>
+                <div className="pt-1">
+                  <div className="text-sm font-bold text-gray-900 mb-1">{item.year}</div>
+                  <div className="text-lg text-gray-600">{item.event}</div>
                 </div>
               </motion.div>
             ))}
@@ -206,77 +176,110 @@ export default function About() {
         </div>
       </section>
 
-      {/* Achievements Section */}
-      <section className="section-padding bg-primary text-white">
-        <div className="container-custom">
+      {/* Values */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-6 lg:px-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-12"
+            className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Achievements & Recognition
+            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+              My Values
             </h2>
-            <p className="text-xl text-gray-300">
-              Honored to be recognized by readers and industry peers
+            <p className="text-xl text-gray-500">
+              Principles that guide my work as an author and marketer
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            {achievements.map((achievement, index) => (
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            {values.map((value, index) => (
               <motion.div
-                key={achievement}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
+                key={value.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: index * 0.05 }}
-                className="bg-white/10 backdrop-blur-lg p-6 rounded-xl flex items-start gap-3"
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="text-center"
               >
-                <Award className="text-accent flex-shrink-0 mt-1" size={24} />
-                <span className="text-lg">{achievement}</span>
+                <div className="inline-flex p-4 bg-gray-50 rounded-2xl mb-6">
+                  <value.icon size={32} className="text-gray-900" />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                  {value.title}
+                </h3>
+                <p className="text-gray-500 leading-relaxed">
+                  {value.description}
+                </p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Media Mentions */}
-      <section className="section-padding">
-        <div className="container-custom">
+      {/* Featured In */}
+      <section className="py-20 bg-gray-50">
+        <div className="container mx-auto px-6 lg:px-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center max-w-3xl mx-auto"
+            className="text-center mb-12"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-primary mb-6">
-              Media & Press
+            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+              Featured In
             </h2>
-            <p className="text-xl text-secondary mb-8">
-              My work has been featured in leading publications and media outlets across Bangladesh.
+            <p className="text-xl text-gray-500">
+              Media mentions and publications
             </p>
-            <div className="space-y-4 text-left bg-[#f5f5f7] p-8 rounded-2xl">
-              <div className="border-l-4 border-accent pl-6">
-                <p className="text-lg italic text-secondary mb-2">
-                  "Nahid Ashraf Uday brings a fresh perspective to Bengali literature with stories 
-                  that resonate across generations."
-                </p>
-                <p className="font-semibold text-primary">— Jugantor Literary Review</p>
-              </div>
-              <div className="border-l-4 border-accent pl-6">
-                <p className="text-lg italic text-secondary mb-2">
-                  "One of the most promising voices in contemporary Bengali writing."
-                </p>
-                <p className="font-semibold text-primary">— Protidiner Bangladesh</p>
-              </div>
-              <div className="border-l-4 border-accent pl-6">
-                <p className="text-lg italic text-secondary mb-2">
-                  "A master storyteller who knows how to captivate readers from the first page."
-                </p>
-                <p className="font-semibold text-primary">— Earki Magazine</p>
-              </div>
-            </div>
+          </motion.div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+            {[
+              { name: 'Jugantor', emoji: '📰' },
+              { name: 'Protidiner Bangladesh', emoji: '📃' },
+              { name: 'Earki', emoji: '📱' },
+              { name: 'Goodreads', emoji: '⭐' },
+            ].map((pub, index) => (
+              <motion.div
+                key={pub.name}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+                className="bg-white p-6 rounded-2xl border border-gray-100 text-center hover:border-gray-900 transition-all"
+              >
+                <div className="text-4xl mb-3">{pub.emoji}</div>
+                <div className="text-sm font-semibold text-gray-900">{pub.name}</div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-6 lg:px-12">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="max-w-3xl mx-auto text-center"
+          >
+            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+              Let's Work Together
+            </h2>
+            <p className="text-xl text-gray-500 mb-8">
+              Looking for a professional copywriter or Facebook marketer for your business?
+            </p>
+            <Link
+              href="/services"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-gray-900 text-white rounded-full font-semibold hover:bg-gray-800 transition-colors"
+            >
+              <Briefcase size={20} />
+              Explore Services
+            </Link>
           </motion.div>
         </div>
       </section>

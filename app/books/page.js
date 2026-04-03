@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Search, Filter, Star, ExternalLink, ShoppingCart, Laugh, BookOpen, Award, TrendingUp } from 'lucide-react'
+import { Search, Filter, Star, ExternalLink, ShoppingCart, BookOpen, Award, TrendingUp, X } from 'lucide-react'
 import Image from 'next/image'
 import Newsletter from '../../components/Newsletter'
 
@@ -12,7 +12,6 @@ export default function Books() {
   const [selectedBook, setSelectedBook] = useState(null)
   const [showBuyModal, setShowBuyModal] = useState(false)
 
-  // Real books from Goodreads
   const books = [
     {
       id: 1,
@@ -41,7 +40,7 @@ export default function Books() {
       titleBengali: 'পাপ এবং পুণ্য',
       author: 'Nahid Ashraf Uday',
       cover: '/images/paap-punno.jpg',
-      category: 'Psychology',
+      category: 'Philosophy',
       rating: 5.0,
       reviews: 0,
       year: 2023,
@@ -58,7 +57,7 @@ export default function Books() {
     }
   ]
 
-  const categories = ['all', 'Humor', 'Psychology', 'Satire']
+  const categories = ['all', 'Humor', 'Philosophy', 'Satire']
 
   const filteredBooks = books.filter(book => {
     const matchesSearch = book.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -75,41 +74,40 @@ export default function Books() {
 
   return (
     <>
-      {/* SEO Hero Section */}
-      <section className="pt-32 pb-16 px-6 bg-gradient-to-br from-yellow-50 via-orange-50 to-red-50">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center"
-          >
+      {/* Hero */}
+      <section className="pt-32 pb-20 bg-white">
+        <div className="container mx-auto px-6 lg:px-12">
+          <div className="max-w-4xl mx-auto text-center">
             <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.2, type: 'spring' }}
-              className="inline-block mb-6"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+              className="inline-flex items-center gap-2 px-4 py-2 mb-8 bg-gray-900 text-white rounded-full text-sm font-medium"
             >
-              <div className="bg-gradient-to-r from-yellow-400 to-orange-400 text-white px-6 py-3 rounded-full font-bold text-lg shadow-lg">
-                <Laugh className="inline mr-2" size={24} />
-                Best Sarcastic Humor Writer in Bangladesh
-              </div>
+              <Award size={16} />
+              <span>Best Sarcastic Humor Writer in Bangladesh</span>
             </motion.div>
 
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 text-primary leading-tight">
-              Bengali Humor & Satire Books
-            </h1>
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="text-5xl lg:text-7xl font-bold text-gray-900 mb-6"
+            >
+              Bengali Books
+            </motion.h1>
             
-            <p className="text-xl md:text-2xl text-gray-700 mb-4 max-w-4xl mx-auto">
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="text-xl text-gray-500 leading-relaxed mb-8"
+            >
               Sarcastic storytelling that makes you laugh and think. Published Bengali books blending gentle humor with sharp social commentary.
-            </p>
-
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-8">
-              By <strong>Nahid Ashraf Uday</strong> - Published author featured in Jugantor, Protidiner Bangladesh, and Earki. Master of humorous writing inspired by the legendary Humayun Ahmed.
-            </p>
+            </motion.p>
 
             {/* Trust Indicators */}
-            <div className="flex flex-wrap justify-center gap-6 mb-8">
+            <div className="flex flex-wrap justify-center gap-6">
               {[
                 { icon: Star, text: '4.56★ Average Rating', color: 'text-yellow-600' },
                 { icon: BookOpen, text: '2 Published Books', color: 'text-blue-600' },
@@ -120,193 +118,127 @@ export default function Books() {
                   key={index}
                   initial={{ opacity: 0, scale: 0 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.4 + index * 0.1, type: 'spring' }}
-                  className="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-md"
+                  transition={{ delay: 0.2 + index * 0.1, type: 'spring' }}
+                  className="flex items-center gap-2 bg-gray-50 px-4 py-2 rounded-full border border-gray-100"
                 >
-                  <badge.icon size={20} className={badge.color} />
-                  <span className="text-gray-700 font-semibold">{badge.text}</span>
+                  <badge.icon size={18} className={badge.color} />
+                  <span className="text-sm font-semibold text-gray-700">{badge.text}</span>
                 </motion.div>
               ))}
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* Search and Filter Section */}
-      <section className="section-padding bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row gap-4 mb-12">
-            {/* Search Bar */}
+      {/* Search and Filter */}
+      <section className="py-12 bg-gray-50">
+        <div className="container mx-auto px-6 lg:px-12">
+          <div className="flex flex-col md:flex-row gap-4 max-w-4xl mx-auto">
             <div className="flex-1 relative">
               <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
               <input
                 type="text"
-                placeholder="Search books by title, genre, or keyword..."
+                placeholder="Search books by title or keyword..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-12 pr-4 py-4 border-2 border-gray-200 rounded-xl focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all text-lg"
+                className="w-full pl-12 pr-4 py-4 border-2 border-gray-200 rounded-xl focus:border-gray-900 outline-none transition-all"
               />
             </div>
 
-            {/* Category Filter */}
-            <div className="flex gap-2 overflow-x-auto">
+            <div className="flex gap-2 overflow-x-auto pb-2">
               {categories.map((category) => (
-                <motion.button
+                <button
                   key={category}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
                   onClick={() => setSelectedCategory(category)}
                   className={`px-6 py-4 rounded-xl font-semibold whitespace-nowrap transition-all ${
                     selectedCategory === category
-                      ? 'bg-gradient-to-r from-yellow-400 to-orange-400 text-white shadow-lg'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                      ? 'bg-gray-900 text-white'
+                      : 'bg-white text-gray-700 hover:bg-gray-100 border-2 border-gray-200'
                   }`}
                 >
                   <Filter className="inline mr-2" size={18} />
                   {category === 'all' ? 'All Books' : category}
-                </motion.button>
+                </button>
               ))}
             </div>
           </div>
+        </div>
+      </section>
 
-          {/* Books Grid */}
-          <motion.div layout className="grid md:grid-cols-2 gap-8">
+      {/* Books Grid */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-6 lg:px-12">
+          <div className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
             {filteredBooks.map((book, index) => (
               <motion.div
                 key={book.id}
-                layout
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.3, delay: index * 0.1 }}
-                whileHover={{ y: -10 }}
-                className="bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all overflow-hidden group"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileHover={{ y: -8 }}
+                className="bg-white rounded-3xl overflow-hidden border-2 border-gray-100 hover:border-gray-900 transition-all"
               >
-                <div className="grid md:grid-cols-5 gap-6 p-6">
-                  {/* Book Cover with Advanced Animations */}
-                  <div className="md:col-span-2">
-                    <motion.div 
-                      className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-lg group-hover:shadow-xl transition-shadow"
-                      whileHover={{ 
-                        rotateY: 5,
-                        rotateX: 5,
-                        scale: 1.05
-                      }}
-                      transition={{ type: 'spring', stiffness: 300 }}
-                    >
-                      {/* Animated gradient overlay */}
-                      <motion.div 
-                        className="absolute inset-0 bg-gradient-to-br from-yellow-400/20 to-orange-400/20"
-                        initial={{ opacity: 0.3 }}
-                        whileHover={{ opacity: 0 }}
-                        transition={{ duration: 0.3 }}
-                      />
-                      
-                      {/* Book cover image with zoom effect */}
-                      <Image
-                        src={book.cover}
-                        alt={`${book.title} by Nahid Ashraf Uday - Best Bengali humor and satire book`}
-                        fill
-                        className="object-cover group-hover:scale-110 transition-transform duration-500"
-                      />
-                      
-                      {/* Featured Badge with pulse animation */}
-                      {book.featured && (
-                        <motion.div 
-                          className="absolute top-4 right-4 bg-gradient-to-r from-yellow-400 to-orange-400 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg"
-                          animate={{ 
-                            scale: [1, 1.1, 1],
-                            boxShadow: [
-                              '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
-                              '0 20px 25px -5px rgba(234, 179, 8, 0.3)',
-                              '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
-                            ]
-                          }}
-                          transition={{ 
-                            duration: 2,
-                            repeat: Infinity,
-                            ease: 'easeInOut'
-                          }}
-                        >
-                          ⭐ Featured
-                        </motion.div>
-                      )}
-
-                      {/* Rating Badge */}
-                      <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-2 rounded-full flex items-center gap-2 shadow-lg">
-                        <Star size={16} className="text-yellow-500 fill-yellow-500" />
-                        <span className="font-bold text-gray-900">{book.rating}</span>
-                        <span className="text-gray-600 text-sm">({book.reviews})</span>
-                      </div>
-
-                      {/* Shimmer effect on hover */}
-                      <motion.div
-                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-                        initial={{ x: '-100%' }}
-                        whileHover={{ x: '100%' }}
-                        transition={{ duration: 0.6 }}
-                      />
-                    </motion.div>
-                  </div>
-
-                  {/* Book Details */}
-                  <div className="md:col-span-3 flex flex-col">
-                    <div className="flex-1">
-                      <div className="inline-block bg-gradient-to-r from-yellow-100 to-orange-100 text-orange-700 px-3 py-1 rounded-full text-sm font-semibold mb-3">
-                        {book.category}
-                      </div>
-
-                      <h3 className="text-3xl font-bold text-primary mb-2 group-hover:text-accent transition-colors">
-                        {book.title}
-                      </h3>
-
-                      <p className="text-2xl text-gray-600 mb-4 font-bengali">
-                        {book.titleBengali}
-                      </p>
-
-                      <p className="text-gray-700 leading-relaxed mb-4">
-                        {book.description}
-                      </p>
-
-                      {/* Highlights */}
-                      <div className="space-y-2 mb-6">
-                        {book.highlights.map((highlight, idx) => (
-                          <motion.div
-                            key={idx}
-                            initial={{ opacity: 0, x: -20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: idx * 0.05 }}
-                            className="flex items-start gap-2"
-                          >
-                            <Laugh size={18} className="text-orange-500 flex-shrink-0 mt-0.5" />
-                            <span className="text-sm text-gray-600">{highlight}</span>
-                          </motion.div>
-                        ))}
-                      </div>
+                {/* Book Cover */}
+                <div className="relative h-96 bg-gray-100 overflow-hidden">
+                  <Image
+                    src={book.cover}
+                    alt={`${book.title} by Nahid Ashraf Uday - Best Bengali humor and satire book`}
+                    fill
+                    className="object-cover hover:scale-105 transition-transform duration-700"
+                  />
+                  
+                  {book.featured && (
+                    <div className="absolute top-4 right-4 bg-gray-900 text-white px-4 py-2 rounded-full text-sm font-bold">
+                      ⭐ Bestseller
                     </div>
+                  )}
 
-                    {/* Buy Button with Animation */}
-                    <motion.button
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      onClick={() => openBuyModal(book)}
-                      className="w-full py-4 bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400 text-white font-bold text-lg rounded-full shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 relative overflow-hidden group"
-                    >
-                      {/* Animated background shine */}
-                      <motion.div
-                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-                        animate={{ x: ['-100%', '100%'] }}
-                        transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
-                      />
-                      <ShoppingCart size={20} className="relative z-10" />
-                      <span className="relative z-10">Buy This Book Now</span>
-                    </motion.button>
+                  <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full flex items-center gap-2 shadow-lg">
+                    <Star size={18} className="text-yellow-500 fill-yellow-500" />
+                    <span className="font-bold text-gray-900">{book.rating}</span>
+                    <span className="text-gray-600">({book.reviews})</span>
                   </div>
+                </div>
+
+                {/* Book Info */}
+                <div className="p-8">
+                  <div className="inline-block bg-gray-100 text-gray-900 px-3 py-1 rounded-full text-sm font-bold mb-4">
+                    {book.category}
+                  </div>
+
+                  <h3 className="text-3xl font-bold text-gray-900 mb-2">
+                    {book.title}
+                  </h3>
+
+                  <p className="text-xl text-gray-600 mb-4">
+                    {book.titleBengali}
+                  </p>
+
+                  <p className="text-gray-600 leading-relaxed mb-6">
+                    {book.description}
+                  </p>
+
+                  <div className="space-y-2 mb-6">
+                    {book.highlights.map((highlight, idx) => (
+                      <div key={idx} className="flex items-start gap-2">
+                        <BookOpen size={16} className="text-gray-400 flex-shrink-0 mt-1" />
+                        <span className="text-sm text-gray-600">{highlight}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <button
+                    onClick={() => openBuyModal(book)}
+                    className="w-full py-4 bg-gray-900 text-white rounded-full font-semibold hover:bg-gray-800 transition-colors flex items-center justify-center gap-2"
+                  >
+                    <ShoppingCart size={20} />
+                    Buy This Book
+                  </button>
                 </div>
               </motion.div>
             ))}
-          </motion.div>
+          </div>
 
           {/* No Results */}
           {filteredBooks.length === 0 && (
@@ -323,69 +255,33 @@ export default function Books() {
         </div>
       </section>
 
-      {/* About the Author Section */}
-      <section className="section-padding bg-gradient-to-br from-gray-50 to-orange-50">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+      {/* About Author */}
+      <section className="py-20 bg-gray-50">
+        <div className="container mx-auto px-6 lg:px-12">
+          <div className="max-w-4xl mx-auto text-center">
             <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-primary">
+              <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
                 About the Author
               </h2>
-              <p className="text-lg text-gray-700 leading-relaxed mb-4">
-                <strong>Nahid Ashraf Uday</strong> is Bangladesh's rising star in sarcastic humor writing. Born in Brahmanbaria and raised in Dhaka, he combines gentle humor with sharp social satire.
+              <p className="text-lg text-gray-600 leading-relaxed mb-8">
+                <strong className="text-gray-900">Nahid Ashraf Uday</strong> is Bangladesh's rising star in sarcastic humor writing. Born in Brahmanbaria and raised in Dhaka, he combines gentle humor with sharp social satire. Inspired by the legendary <strong className="text-gray-900">Humayun Ahmed</strong>, his work has been featured in <strong className="text-gray-900">Jugantor</strong>, <strong className="text-gray-900">Protidiner Bangladesh</strong>, and <strong className="text-gray-900">Earki</strong>.
               </p>
-              <p className="text-lg text-gray-700 leading-relaxed mb-4">
-                Inspired by the legendary <strong>Humayun Ahmed</strong>, Nahid's writing celebrates Bengali culture while offering witty commentary on everyday life. His debut at the 2023 Ekushey Book Fair established him as a fresh voice in Bangladeshi literature.
-              </p>
-              <p className="text-lg text-gray-700 leading-relaxed mb-6">
-                His work has been featured in <strong>Jugantor</strong>, <strong>Protidiner Bangladesh</strong>, and <strong>Earki</strong>, reaching thousands of readers who appreciate intelligent humor and thoughtful satire.
-              </p>
-
-              <div className="flex gap-4">
-                <a
-                  href="https://www.goodreads.com/author/show/29731524.Nahid_Ashraf_Uday"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-full font-semibold hover:bg-gray-800 transition-colors"
-                >
-                  <Star size={20} />
-                  Goodreads Profile
-                </a>
-                <a
-                  href="/about"
-                  className="inline-flex items-center gap-2 px-6 py-3 border-2 border-primary text-primary rounded-full font-semibold hover:bg-primary hover:text-white transition-all"
-                >
-                  Read Full Bio
-                </a>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="relative"
-            >
-              <div className="relative aspect-square rounded-3xl overflow-hidden shadow-2xl">
-                <Image
-                  src="/images/hero-photo.jpg"
-                  alt="Nahid Ashraf Uday - Best Sarcastic Humor Writer in Bangladesh"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <div className="absolute -bottom-6 -right-6 w-64 h-64 bg-orange-400/20 rounded-full blur-3xl -z-10" />
-              <div className="absolute -top-6 -left-6 w-64 h-64 bg-yellow-400/20 rounded-full blur-3xl -z-10" />
+              <a
+                href="/about"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-gray-900 text-white rounded-full font-semibold hover:bg-gray-800 transition-colors"
+              >
+                Read Full Bio
+              </a>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Newsletter Section */}
+      {/* Newsletter */}
       <Newsletter />
 
       {/* Buy Modal */}
@@ -395,80 +291,73 @@ export default function Books() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
             onClick={() => setShowBuyModal(false)}
           >
             <motion.div
-              initial={{ scale: 0.9, opacity: 0, y: 50 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.9, opacity: 0, y: 50 }}
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
               transition={{ type: 'spring', duration: 0.5 }}
               onClick={(e) => e.stopPropagation()}
-              className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full overflow-hidden"
+              className="bg-white rounded-3xl shadow-2xl max-w-md w-full overflow-hidden"
             >
               {/* Modal Header */}
-              <div className="bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400 p-8 text-white relative overflow-hidden">
-                <motion.div
-                  className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -mr-32 -mt-32"
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-                />
-                <ShoppingCart size={48} className="mb-4 relative z-10" />
-                <h2 className="text-3xl font-bold mb-2 relative z-10">Choose Where to Buy</h2>
-                <p className="text-white/90 relative z-10">{selectedBook.title} - {selectedBook.titleBengali}</p>
+              <div className="bg-gray-900 p-8 text-white relative">
+                <button
+                  onClick={() => setShowBuyModal(false)}
+                  className="absolute top-4 right-4 w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors"
+                >
+                  <X size={20} />
+                </button>
+                <ShoppingCart size={48} className="mb-4" />
+                <h2 className="text-3xl font-bold mb-2">Choose Where to Buy</h2>
+                <p className="text-gray-300">{selectedBook.title}</p>
+                <p className="text-gray-400 text-lg">{selectedBook.titleBengali}</p>
               </div>
 
               {/* Buy Options */}
               <div className="p-8 space-y-4">
                 <p className="text-gray-600 mb-6 text-center">
-                  Select your preferred online bookstore to purchase this book
+                  Select your preferred online bookstore
                 </p>
 
-                {/* Rokomari Button */}
-                <motion.a
+                <a
                   href={selectedBook.rokomari}
                   target="_blank"
                   rel="noopener noreferrer"
-                  whileHover={{ scale: 1.02, x: 5 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="block w-full p-6 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-2xl shadow-lg hover:shadow-xl transition-all group"
+                  className="block w-full p-6 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-2xl hover:shadow-xl transition-all group"
                 >
                   <div className="flex items-center justify-between">
                     <div>
                       <div className="text-2xl font-bold mb-1">Rokomari.com</div>
-                      <div className="text-white/90">Bangladesh's largest online bookstore</div>
+                      <div className="text-white/90">Bangladesh's largest bookstore</div>
                     </div>
                     <ExternalLink size={32} className="group-hover:translate-x-1 transition-transform" />
                   </div>
-                </motion.a>
+                </a>
 
-                {/* Boibazar Button */}
-                <motion.a
+                <a
                   href={selectedBook.boibazar}
                   target="_blank"
                   rel="noopener noreferrer"
-                  whileHover={{ scale: 1.02, x: 5 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="block w-full p-6 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-2xl shadow-lg hover:shadow-xl transition-all group"
+                  className="block w-full p-6 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-2xl hover:shadow-xl transition-all group"
                 >
                   <div className="flex items-center justify-between">
                     <div>
                       <div className="text-2xl font-bold mb-1">Boibazar.com</div>
-                      <div className="text-white/90">Trusted Bengali book marketplace</div>
+                      <div className="text-white/90">Trusted Bengali marketplace</div>
                     </div>
                     <ExternalLink size={32} className="group-hover:translate-x-1 transition-transform" />
                   </div>
-                </motion.a>
+                </a>
 
-                {/* Cancel Button */}
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
+                <button
                   onClick={() => setShowBuyModal(false)}
                   className="w-full py-4 border-2 border-gray-300 text-gray-700 rounded-full font-semibold hover:bg-gray-50 transition-colors"
                 >
                   Cancel
-                </motion.button>
+                </button>
               </div>
             </motion.div>
           </motion.div>
