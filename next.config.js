@@ -1,12 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  images: {
-    domains: ['images.unsplash.com', 'placeholder.com'],
-    unoptimized: true
-  },
-  experimental: {
-    optimizeCss: true
-  }
+  // No images config needed if all images are local
 }
 
 module.exports = nextConfig
