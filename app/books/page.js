@@ -182,10 +182,26 @@ export default function Books() {
                 className="bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all overflow-hidden group"
               >
                 <div className="grid md:grid-cols-5 gap-6 p-6">
-                  {/* Book Cover */}
+                  {/* Book Cover with Advanced Animations */}
                   <div className="md:col-span-2">
-                    <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-lg group-hover:shadow-xl transition-shadow">
-                      <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/20 to-orange-400/20 group-hover:opacity-0 transition-opacity" />
+                    <motion.div 
+                      className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-lg group-hover:shadow-xl transition-shadow"
+                      whileHover={{ 
+                        rotateY: 5,
+                        rotateX: 5,
+                        scale: 1.05
+                      }}
+                      transition={{ type: 'spring', stiffness: 300 }}
+                    >
+                      {/* Animated gradient overlay */}
+                      <motion.div 
+                        className="absolute inset-0 bg-gradient-to-br from-yellow-400/20 to-orange-400/20"
+                        initial={{ opacity: 0.3 }}
+                        whileHover={{ opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                      />
+                      
+                      {/* Book cover image with zoom effect */}
                       <Image
                         src={book.cover}
                         alt={`${book.title} by Nahid Ashraf Uday - Best Bengali humor and satire book`}
@@ -193,11 +209,26 @@ export default function Books() {
                         className="object-cover group-hover:scale-110 transition-transform duration-500"
                       />
                       
-                      {/* Featured Badge */}
+                      {/* Featured Badge with pulse animation */}
                       {book.featured && (
-                        <div className="absolute top-4 right-4 bg-gradient-to-r from-yellow-400 to-orange-400 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
+                        <motion.div 
+                          className="absolute top-4 right-4 bg-gradient-to-r from-yellow-400 to-orange-400 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg"
+                          animate={{ 
+                            scale: [1, 1.1, 1],
+                            boxShadow: [
+                              '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+                              '0 20px 25px -5px rgba(234, 179, 8, 0.3)',
+                              '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
+                            ]
+                          }}
+                          transition={{ 
+                            duration: 2,
+                            repeat: Infinity,
+                            ease: 'easeInOut'
+                          }}
+                        >
                           ⭐ Featured
-                        </div>
+                        </motion.div>
                       )}
 
                       {/* Rating Badge */}
@@ -206,7 +237,15 @@ export default function Books() {
                         <span className="font-bold text-gray-900">{book.rating}</span>
                         <span className="text-gray-600 text-sm">({book.reviews})</span>
                       </div>
-                    </div>
+
+                      {/* Shimmer effect on hover */}
+                      <motion.div
+                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                        initial={{ x: '-100%' }}
+                        whileHover={{ x: '100%' }}
+                        transition={{ duration: 0.6 }}
+                      />
+                    </motion.div>
                   </div>
 
                   {/* Book Details */}
@@ -246,15 +285,21 @@ export default function Books() {
                       </div>
                     </div>
 
-                    {/* Buy Button */}
+                    {/* Buy Button with Animation */}
                     <motion.button
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                       onClick={() => openBuyModal(book)}
-                      className="w-full py-4 bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400 text-white font-bold text-lg rounded-full shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2"
+                      className="w-full py-4 bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400 text-white font-bold text-lg rounded-full shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 relative overflow-hidden group"
                     >
-                      <ShoppingCart size={20} />
-                      Buy This Book Now
+                      {/* Animated background shine */}
+                      <motion.div
+                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                        animate={{ x: ['-100%', '100%'] }}
+                        transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
+                      />
+                      <ShoppingCart size={20} className="relative z-10" />
+                      <span className="relative z-10">Buy This Book Now</span>
                     </motion.button>
                   </div>
                 </div>
