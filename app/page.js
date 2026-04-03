@@ -3,36 +3,28 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
-import { BookOpen, Briefcase, ArrowRight, Award, Users, TrendingUp } from 'lucide-react'
+import { BookOpen, Briefcase, ArrowRight, Award, Users, TrendingUp, Star } from 'lucide-react'
 import Newsletter from '../components/Newsletter'
 import BookCard from '../components/BookCard'
 
 export default function Home() {
-  // Sample data - replace with actual data from CMS or database
+  // Real books from your Goodreads profile
   const featuredBooks = [
     {
       id: 1,
-      title: 'The Silent Echo',
-      description: 'A gripping tale of mystery and redemption set in the heart of Bangladesh.',
-      cover: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400',
-      rokomari: 'https://rokomari.com',
-      boibazar: 'https://boibazar.com'
+      title: 'Hawai Mithai (হাওয়াই মিঠাই)',
+      description: 'A celebrated debut blending gentle humor and subtle satire that mirrors everyday Bangladeshi life. Winner of hearts at the 2023 Book Fair.',
+      cover: '/images/hawai-mithai.jpg',
+      rokomari: 'https://www.rokomari.com/book/author/74400/nahid-ashraf-uday',
+      boibazar: 'https://www.boibazar.com/author-books/nahid-ashraf-uday'
     },
     {
       id: 2,
-      title: 'Beyond the Horizon',
-      description: 'An inspiring journey through love, loss, and finding oneself.',
-      cover: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400',
-      rokomari: 'https://rokomari.com',
-      boibazar: 'https://boibazar.com'
-    },
-    {
-      id: 3,
-      title: 'Whispers of Tomorrow',
-      description: 'A collection of short stories exploring the human condition.',
-      cover: 'https://images.unsplash.com/photo-1495446815901-a7297e633e8d?w=400',
-      rokomari: 'https://rokomari.com',
-      boibazar: 'https://boibazar.com'
+      title: 'Paap Ebong Punno (পাপ এবং পুণ্য)',
+      description: 'An exploration of morality, sin, and virtue through compelling narratives and thought-provoking storytelling.',
+      cover: '/images/paap-punno.jpg',
+      rokomari: 'https://www.rokomari.com/book/author/74400/nahid-ashraf-uday',
+      boibazar: 'https://www.boibazar.com/author-books/nahid-ashraf-uday'
     }
   ]
 
@@ -40,18 +32,20 @@ export default function Home() {
     { name: 'Jugantor', logo: '📰' },
     { name: 'Protidiner Bangladesh', logo: '📃' },
     { name: 'Earki', logo: '📱' },
-    { name: 'Daily Star', logo: '⭐' },
+    { name: 'Goodreads Author', logo: '⭐' },
   ]
 
   const stats = [
-    { icon: BookOpen, value: '15+', label: 'Books Published' },
-    { icon: Users, value: '50K+', label: 'Readers' },
-    { icon: Award, value: '8', label: 'Awards Won' },
-    { icon: TrendingUp, value: '10+', label: 'Years Experience' },
+    { icon: BookOpen, value: '2+', label: 'Published Books' },
+    { icon: Users, value: '5K+', label: 'Readers Worldwide' },
+    { icon: Award, value: '4.56', label: 'Average Rating' },
+    { icon: TrendingUp, value: '2023', label: 'Debut Author' },
   ]
 
   return (
     <>
+      {/* SEO Meta Tags - Next.js will handle these */}
+      
       {/* Hero Section */}
       <section className="min-h-screen flex items-center justify-center section-padding bg-gradient-to-br from-white via-blue-50 to-white">
         <div className="container-custom">
@@ -76,16 +70,25 @@ export default function Home() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4, duration: 0.8 }}
               >
-                Author & Storyteller
+                Bangladeshi Author & Storyteller
               </motion.div>
               
               <motion.p
-                className="text-xl text-secondary mb-8 leading-relaxed max-w-xl"
+                className="text-xl text-secondary mb-4 leading-relaxed max-w-xl"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6, duration: 0.8 }}
               >
-                Crafting compelling narratives that inspire, entertain, and resonate with readers across the globe.
+                Born in Brahmanbaria, raised in Dhaka. Crafting Bengali literature that blends gentle humor, satire, and everyday life. Currently pursuing Master's at University of Adelaide, Australia.
+              </motion.p>
+
+              <motion.p
+                className="text-lg text-secondary mb-8 leading-relaxed max-w-xl"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.7, duration: 0.8 }}
+              >
+                Published author of <strong>"Hawai Mithai"</strong> (2023) and <strong>"Paap Ebong Punno"</strong>. Featured in Jugantor, Protidiner Bangladesh, and Earki.
               </motion.p>
               
               <motion.div
@@ -95,10 +98,10 @@ export default function Home() {
                 transition={{ delay: 0.8, duration: 0.8 }}
               >
                 <Link href="/books" className="btn-primary text-center">
-                  Explore Books
+                  Explore My Books
                 </Link>
                 <Link href="/services" className="btn-outline text-center">
-                  Hire Me
+                  Hire Me for Writing
                 </Link>
               </motion.div>
             </motion.div>
@@ -112,7 +115,7 @@ export default function Home() {
               <div className="relative w-full aspect-square rounded-3xl overflow-hidden shadow-2xl">
                 <Image
                   src="/images/hero-photo.jpg"
-                  alt="Nahid Ashraf Uday"
+                  alt="Nahid Ashraf Uday - Bangladeshi Author and Storyteller from Brahmanbaria"
                   fill
                   className="object-cover"
                   priority
@@ -158,20 +161,19 @@ export default function Home() {
               transition={{ duration: 0.6 }}
             >
               <h2 className="text-4xl md:text-5xl font-bold mb-6 text-primary">
-                About Me
+                About Nahid Ashraf Uday
               </h2>
               <p className="text-lg text-secondary leading-relaxed mb-6">
-                With over a decade of experience in storytelling, I've dedicated my life to crafting 
-                narratives that touch hearts and inspire minds. My journey as an author has been one 
-                of continuous learning, growth, and connection with readers worldwide.
+                Born on August 21, 1998, in Brahmanbaria, I spent most of my childhood in Dhaka, where books became my first love. From an early age, stories fascinated me—not just as a reader but as a dreamer who wanted to tell his own.
+              </p>
+              <p className="text-lg text-secondary leading-relaxed mb-6">
+                My writing is celebrated for its gentle simplicity and subtle humor that often mirrors everyday Bangladeshi life. Inspired by the legendary <strong>Humayun Ahmed</strong>, I blend comedy, satire, and human emotions in my narratives.
               </p>
               <p className="text-lg text-secondary leading-relaxed mb-8">
-                Through my books, articles, and content, I explore the depths of human emotion, 
-                culture, and the beauty of the written word. Each story is a window into different 
-                worlds, perspectives, and experiences.
+                My debut book, <strong>"Hawai Mithai" (হাওয়াই মিঠাই)</strong>, released at the 2023 Ekushey Book Fair, introduced readers to my unique voice. Beyond writing, I'm pursuing my Master's degree at the University of Adelaide, Australia, exploring new horizons while staying connected to my Bengali roots.
               </p>
               <Link href="/about" className="inline-flex items-center gap-2 text-accent font-semibold text-lg hover:gap-4 transition-all">
-                Read Full Story
+                Read Full Biography
                 <ArrowRight size={20} />
               </Link>
             </motion.div>
@@ -185,7 +187,7 @@ export default function Home() {
             >
               <Image
                 src="/images/hero-photo.jpg"
-                alt="Writing desk"
+                alt="Nahid Ashraf Uday writing desk"
                 fill
                 className="object-cover"
               />
@@ -205,10 +207,10 @@ export default function Home() {
             className="text-center mb-12"
           >
             <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
-              Featured In
+              Published & Featured In
             </h2>
             <p className="text-lg text-secondary">
-              Recognized by leading publications and media outlets
+              Recognized by leading Bangladeshi publications and literary platforms
             </p>
           </motion.div>
 
@@ -241,14 +243,14 @@ export default function Home() {
             className="text-center mb-12"
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-4 text-primary">
-              Featured Books
+              Published Bengali Books
             </h2>
             <p className="text-xl text-secondary max-w-2xl mx-auto">
-              Explore my latest works and dive into worlds of imagination
+              Humor, satire, and stories that resonate with Bengali readers. Available on Rokomari and Boibazar.
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+          <div className="grid md:grid-cols-2 gap-8 mb-12 max-w-4xl mx-auto">
             {featuredBooks.map((book, index) => (
               <BookCard key={book.id} book={book} index={index} />
             ))}
@@ -278,18 +280,18 @@ export default function Home() {
             className="text-center mb-12"
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Professional Services
+              Professional Writing Services
             </h2>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              Let's bring your stories and ideas to life with professional writing services
+              Bengali and English content writing, copywriting, and social media marketing services
             </p>
           </motion.div>
 
           <div className="grid md:grid-cols-3 gap-8 mb-12">
             {[
-              { icon: BookOpen, title: 'Content Writing', description: 'Engaging articles, blogs, and web content' },
-              { icon: Briefcase, title: 'Copywriting', description: 'Persuasive copy that converts' },
-              { icon: TrendingUp, title: 'Facebook Marketing', description: 'Strategic social media campaigns' }
+              { icon: BookOpen, title: 'Content Writing', description: 'Engaging Bengali and English articles, blogs, and web content that resonates with your audience' },
+              { icon: Briefcase, title: 'Copywriting', description: 'Persuasive sales copy in Bengali and English that drives conversions and builds brand voice' },
+              { icon: TrendingUp, title: 'Facebook Marketing', description: 'Strategic Bangladeshi market-focused social media campaigns and content creation' }
             ].map((service, index) => (
               <motion.div
                 key={service.title}
@@ -313,7 +315,7 @@ export default function Home() {
             className="text-center"
           >
             <Link href="/services" className="btn-primary bg-white text-primary hover:bg-gray-100 inline-block">
-              Explore All Services
+              Hire Me for Writing Projects
             </Link>
           </motion.div>
         </div>

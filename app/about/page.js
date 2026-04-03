@@ -75,7 +75,7 @@ export default function About() {
             >
               <div className="relative w-full aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl">
                 <Image
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600"
+                  src="/images/best digital marketer bangladesh.jpg"
                   alt="Nahid Ashraf Uday"
                   fill
                   className="object-cover"
