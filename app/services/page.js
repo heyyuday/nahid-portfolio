@@ -1,334 +1,499 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import { useState } from 'react'
-import ServiceCard from '../../components/ServiceCard'
-import { Pen, Megaphone, TrendingUp, Send, CheckCircle, AlertCircle, X } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { BookOpen, Briefcase, TrendingUp, Check, X, Star, Award, Users, Zap } from 'lucide-react'
 
 export default function Services() {
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [selectedService, setSelectedService] = useState('')
+  const [selectedService, setSelectedService] = useState(null)
+  const [showModal, setShowModal] = useState(false)
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     service_type: '',
     message: ''
   })
-  const [status, setStatus] = useState('idle') // idle, loading, success, error
-  const [message, setMessage] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState(null)
 
   const services = [
     {
+      id: 'content-writing',
+      icon: BookOpen,
       title: 'Content Writing',
-      icon: Pen,
-      description: 'High-quality, engaging content that resonates with your audience and drives results. From blog posts to website copy, I create content that tells your story.',
+      subtitle: 'Engaging Bengali & English Content',
+      price: '৳5,000',
+      priceNote: 'per article/blog',
+      description: 'Professional content writing services in both Bengali and English. Perfect for blogs, websites, and digital platforms targeting Bangladeshi and international audiences.',
       features: [
-        'Blog posts and articles',
-        'Website content and landing pages',
-        'SEO-optimized writing',
-        'Research-backed content',
-        'Unlimited revisions'
+        'SEO-optimized Bengali articles',
+        'English blog posts and web content',
+        'Cultural sensitivity for Bangladeshi market',
+        'Research-backed writing',
+        'Unlimited revisions',
+        'Fast 3-5 day turnaround'
       ],
-      pricing: 'Starting at ৳5,000',
-      pricingNote: 'Per 1000 words'
+      highlights: [
+        '500+ articles written',
+        'Published in Jugantor & Protidiner Bangladesh',
+        'Expert in Bengali humor & satire'
+      ],
+      color: 'from-blue-500 to-cyan-500'
     },
     {
+      id: 'copywriting',
+      icon: Briefcase,
       title: 'Copywriting',
-      icon: Megaphone,
-      description: 'Persuasive copy that converts readers into customers. I craft compelling messages that drive action and boost your business.',
+      subtitle: 'Persuasive Sales Copy That Converts',
+      price: '৳8,000',
+      priceNote: 'per project',
+      description: 'High-converting copywriting for Bangladeshi businesses. Sales pages, landing pages, email campaigns, and ad copy that speaks to your audience and drives action.',
       features: [
-        'Sales pages and landing pages',
+        'Sales page copywriting',
         'Email marketing campaigns',
+        'Facebook & Google ad copy',
         'Product descriptions',
-        'Ad copy (Google, Facebook)',
-        'Brand messaging and taglines'
+        'Landing page optimization',
+        'A/B testing suggestions'
       ],
-      pricing: 'Starting at ৳8,000',
-      pricingNote: 'Per project'
+      highlights: [
+        'Proven conversion strategies',
+        'Understanding of Bangladeshi buyer psychology',
+        'Both Bengali & English expertise'
+      ],
+      color: 'from-purple-500 to-pink-500'
     },
     {
-      title: 'Facebook Marketing',
+      id: 'facebook-marketing',
       icon: TrendingUp,
-      description: 'Strategic Facebook marketing campaigns that grow your audience and increase engagement. Data-driven approach for measurable results.',
+      title: 'Facebook Marketing',
+      subtitle: 'Strategic Social Media Growth',
+      price: '৳15,000',
+      priceNote: 'per month',
+      description: 'Complete Facebook marketing services for Bangladeshi businesses. Content strategy, post creation, ad campaigns, and community management to grow your brand.',
       features: [
-        'Campaign strategy and planning',
-        'Content creation and scheduling',
-        'Audience targeting and analysis',
-        'Ad management and optimization',
+        'Content calendar planning',
+        'Daily post creation (Bengali/English)',
+        'Facebook ad campaign management',
+        'Audience targeting & analytics',
+        'Community engagement',
         'Monthly performance reports'
       ],
-      pricing: 'Starting at ৳15,000',
-      pricingNote: 'Per month'
+      highlights: [
+        'Specialized in BD market',
+        'Creative storytelling approach',
+        'Data-driven strategy'
+      ],
+      color: 'from-orange-500 to-red-500'
     }
   ]
 
-  const handleRequestService = (serviceName) => {
-    setSelectedService(serviceName)
-    setFormData({ ...formData, service_type: serviceName })
-    setIsModalOpen(true)
+  const handleInputChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    })
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    setStatus('loading')
+    setIsSubmitting(true)
+    setSubmitStatus(null)
 
     try {
       const response = await fetch('/api/services', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify(formData),
       })
 
-      const data = await response.json()
-
       if (response.ok) {
-        setStatus('success')
-        setMessage('Your request has been submitted! I\'ll get back to you within 24 hours.')
-        setFormData({ name: '', email: '', service_type: '', message: '' })
+        setSubmitStatus('success')
+        setFormData({
+          name: '',
+          email: '',
+          service_type: '',
+          message: ''
+        })
         setTimeout(() => {
-          setIsModalOpen(false)
-          setStatus('idle')
-          setMessage('')
+          setShowModal(false)
+          setSubmitStatus(null)
         }, 3000)
       } else {
-        setStatus('error')
-        setMessage(data.error || 'Something went wrong. Please try again.')
+        setSubmitStatus('error')
       }
     } catch (error) {
-      setStatus('error')
-      setMessage('Network error. Please try again.')
+      setSubmitStatus('error')
+    } finally {
+      setIsSubmitting(false)
     }
+  }
+
+  const openModal = (service) => {
+    setSelectedService(service)
+    setFormData({
+      ...formData,
+      service_type: service.title
+    })
+    setShowModal(true)
   }
 
   return (
     <>
-      {/* Hero Section */}
-      <section className="section-padding bg-gradient-to-br from-white via-blue-50 to-white">
-        <div className="container-custom">
+      {/* SEO-Optimized Hero Section */}
+      <section className="pt-32 pb-16 px-6 bg-gradient-to-br from-primary via-gray-900 to-primary text-white">
+        <div className="max-w-7xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-center max-w-4xl mx-auto"
           >
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 text-primary">
-              Professional Services
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+              Professional Writing & Marketing Services
             </h1>
-            <p className="text-2xl text-secondary leading-relaxed">
-              Transform your ideas into compelling content that engages, inspires, and converts. 
-              Let's bring your vision to life.
+            <p className="text-xl md:text-2xl text-gray-300 mb-4 max-w-4xl mx-auto">
+              Expert Bengali & English content writing, persuasive copywriting, and Facebook marketing for Bangladeshi businesses
             </p>
+            <p className="text-lg text-gray-400 max-w-3xl mx-auto">
+              Published author with proven expertise in humor, satire, and engaging storytelling. Featured in Jugantor, Protidiner Bangladesh, and Earki.
+            </p>
+          </motion.div>
+
+          {/* Trust Badges */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.6 }}
+            className="flex flex-wrap justify-center gap-8 mt-12"
+          >
+            {[
+              { icon: Award, text: 'Published Author' },
+              { icon: Star, text: '4.56★ Rating' },
+              { icon: Users, text: '5K+ Readers' },
+              { icon: Zap, text: 'Fast Delivery' }
+            ].map((badge, index) => (
+              <div key={index} className="flex items-center gap-2">
+                <badge.icon size={24} className="text-accent" />
+                <span className="text-gray-300">{badge.text}</span>
+              </div>
+            ))}
           </motion.div>
         </div>
       </section>
 
       {/* Services Grid */}
-      <section className="section-padding">
-        <div className="container-custom">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <section className="section-padding bg-white">
+        <div className="max-w-7xl mx-auto px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">
+              Choose Your Service
+            </h2>
+            <p className="text-xl text-secondary max-w-2xl mx-auto">
+              Professional writing services tailored for the Bangladeshi market
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-8">
             {services.map((service, index) => (
-              <ServiceCard
-                key={service.title}
-                service={service}
-                index={index}
-                onRequestService={handleRequestService}
-              />
+              <motion.div
+                key={service.id}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileHover={{ y: -10, transition: { duration: 0.3 } }}
+                className="relative"
+              >
+                {/* Animated gradient border */}
+                <div className={`absolute -inset-0.5 bg-gradient-to-r ${service.color} rounded-3xl opacity-0 group-hover:opacity-100 blur transition duration-500`} />
+                
+                <div className="relative bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden group">
+                  {/* Gradient header */}
+                  <div className={`bg-gradient-to-r ${service.color} p-8 text-white relative overflow-hidden`}>
+                    <motion.div
+                      className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16"
+                      animate={{ scale: [1, 1.2, 1], rotate: [0, 90, 0] }}
+                      transition={{ duration: 4, repeat: Infinity }}
+                    />
+                    <service.icon size={48} className="mb-4 relative z-10" />
+                    <h3 className="text-3xl font-bold mb-2 relative z-10">{service.title}</h3>
+                    <p className="text-white/90 relative z-10">{service.subtitle}</p>
+                  </div>
+
+                  {/* Pricing */}
+                  <div className="p-8">
+                    <div className="text-center mb-6">
+                      <div className="text-5xl font-bold text-primary mb-2">{service.price}</div>
+                      <div className="text-gray-500">{service.priceNote}</div>
+                    </div>
+
+                    {/* Description */}
+                    <p className="text-gray-600 mb-6 leading-relaxed">
+                      {service.description}
+                    </p>
+
+                    {/* Features */}
+                    <div className="space-y-3 mb-6">
+                      {service.features.map((feature, idx) => (
+                        <motion.div
+                          key={idx}
+                          initial={{ opacity: 0, x: -20 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          viewport={{ once: true }}
+                          transition={{ delay: idx * 0.05 }}
+                          className="flex items-start gap-3"
+                        >
+                          <Check size={20} className="text-green-500 flex-shrink-0 mt-0.5" />
+                          <span className="text-gray-700">{feature}</span>
+                        </motion.div>
+                      ))}
+                    </div>
+
+                    {/* Highlights */}
+                    <div className="bg-gray-50 rounded-xl p-4 mb-6">
+                      {service.highlights.map((highlight, idx) => (
+                        <div key={idx} className="flex items-center gap-2 text-sm text-gray-700 mb-2 last:mb-0">
+                          <Star size={16} className="text-yellow-500 flex-shrink-0" />
+                          <span>{highlight}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* CTA Button */}
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      onClick={() => openModal(service)}
+                      className={`w-full py-4 rounded-full font-bold text-lg bg-gradient-to-r ${service.color} text-white shadow-lg hover:shadow-xl transition-all duration-300`}
+                    >
+                      Request This Service
+                    </motion.button>
+                  </div>
+                </div>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
       {/* Why Choose Me Section */}
-      <section className="section-padding bg-[#f5f5f7]">
-        <div className="container-custom">
+      <section className="section-padding bg-gradient-to-br from-gray-50 to-blue-50">
+        <div className="max-w-7xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-12"
+            className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">
               Why Work With Me?
             </h2>
             <p className="text-xl text-secondary max-w-2xl mx-auto">
-              Proven expertise delivering results for clients across industries
+              Proven expertise in Bengali literature and digital marketing
             </p>
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
-              { title: '10+ Years', description: 'Professional experience' },
-              { title: '200+', description: 'Projects completed' },
-              { title: '98%', description: 'Client satisfaction' },
-              { title: '24/7', description: 'Support available' }
-            ].map((stat, index) => (
+              {
+                title: 'Published Author',
+                description: 'Author of "Hawai Mithai" and "Paap Ebong Punno" - proven storytelling expertise',
+                icon: '📚'
+              },
+              {
+                title: 'Featured Writer',
+                description: 'Published in Jugantor, Protidiner Bangladesh, and Earki',
+                icon: '📰'
+              },
+              {
+                title: 'Bilingual Expert',
+                description: 'Native Bengali speaker with excellent English writing skills',
+                icon: '🌏'
+              },
+              {
+                title: 'Fast Turnaround',
+                description: 'Quick delivery without compromising on quality',
+                icon: '⚡'
+              }
+            ].map((reason, index) => (
               <motion.div
-                key={stat.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                key={index}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="bg-white p-8 rounded-2xl shadow-lg text-center"
+                transition={{ delay: index * 0.1 }}
+                whileHover={{ y: -5 }}
+                className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all"
               >
-                <div className="text-5xl font-bold text-accent mb-2">{stat.title}</div>
-                <div className="text-secondary">{stat.description}</div>
+                <div className="text-5xl mb-4">{reason.icon}</div>
+                <h3 className="text-xl font-bold text-primary mb-3">{reason.title}</h3>
+                <p className="text-gray-600">{reason.description}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Process Section */}
-      <section className="section-padding">
-        <div className="container-custom">
+      {/* Modal */}
+      <AnimatePresence>
+        {showModal && (
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            onClick={() => setShowModal(false)}
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">
-              How It Works
-            </h2>
-            <p className="text-xl text-secondary max-w-2xl mx-auto">
-              Simple, transparent process from start to finish
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-4 gap-8 max-w-5xl mx-auto">
-            {[
-              { step: '01', title: 'Consult', description: 'We discuss your needs and goals' },
-              { step: '02', title: 'Proposal', description: 'Receive a detailed project proposal' },
-              { step: '03', title: 'Create', description: 'I craft content tailored to you' },
-              { step: '04', title: 'Deliver', description: 'Receive polished, ready-to-use content' }
-            ].map((item, index) => (
-              <motion.div
-                key={item.step}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="text-center"
-              >
-                <div className="w-16 h-16 rounded-full bg-accent text-white text-2xl font-bold flex items-center justify-center mx-auto mb-4">
-                  {item.step}
-                </div>
-                <h3 className="text-xl font-bold text-primary mb-2">{item.title}</h3>
-                <p className="text-secondary">{item.description}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Service Request Modal */}
-      {isModalOpen && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="bg-white rounded-3xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
-          >
-            <div className="flex justify-between items-center mb-6">
-              <h3 className="text-3xl font-bold text-primary">Request Service</h3>
-              <button
-                onClick={() => setIsModalOpen(false)}
-                className="text-secondary hover:text-primary transition-colors"
-              >
-                <X size={28} />
-              </button>
-            </div>
-
-            {status === 'success' ? (
-              <div className="text-center py-12">
-                <CheckCircle size={64} className="text-green-500 mx-auto mb-4" />
-                <p className="text-xl text-green-600">{message}</p>
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0, y: 50 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 50 }}
+              transition={{ type: 'spring', duration: 0.5 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+            >
+              {/* Modal Header */}
+              <div className={`bg-gradient-to-r ${selectedService?.color} p-8 text-white relative overflow-hidden`}>
+                <motion.div
+                  className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -mr-32 -mt-32"
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+                />
+                <button
+                  onClick={() => setShowModal(false)}
+                  className="absolute top-6 right-6 p-2 hover:bg-white/20 rounded-full transition-colors z-10"
+                >
+                  <X size={24} />
+                </button>
+                <selectedService.icon size={48} className="mb-4 relative z-10" />
+                <h2 className="text-3xl font-bold mb-2 relative z-10">Request {selectedService?.title}</h2>
+                <p className="text-white/90 relative z-10">Fill out the form below and I'll get back to you within 24 hours</p>
               </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
+
+              {/* Modal Form */}
+              <form onSubmit={handleSubmit} className="p-8 space-y-6">
                 <div>
-                  <label className="block text-sm font-semibold text-primary mb-2">
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
                     Your Name *
                   </label>
                   <input
                     type="text"
-                    required
+                    name="name"
                     value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-accent outline-none text-lg"
-                    placeholder="Enter your full name"
+                    onChange={handleInputChange}
+                    required
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all"
+                    placeholder="John Doe"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-primary mb-2">
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
                     Email Address *
                   </label>
                   <input
                     type="email"
-                    required
+                    name="email"
                     value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-accent outline-none text-lg"
-                    placeholder="your@email.com"
+                    onChange={handleInputChange}
+                    required
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all"
+                    placeholder="john@example.com"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-primary mb-2">
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
                     Service Type *
                   </label>
                   <select
-                    required
+                    name="service_type"
                     value={formData.service_type}
-                    onChange={(e) => setFormData({ ...formData, service_type: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-accent outline-none text-lg"
+                    onChange={handleInputChange}
+                    required
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all"
                   >
                     <option value="">Select a service</option>
-                    {services.map(service => (
-                      <option key={service.title} value={service.title}>
-                        {service.title}
-                      </option>
-                    ))}
+                    <option value="Content Writing">Content Writing - ৳5,000</option>
+                    <option value="Copywriting">Copywriting - ৳8,000</option>
+                    <option value="Facebook Marketing">Facebook Marketing - ৳15,000/month</option>
                   </select>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-primary mb-2">
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
                     Project Details *
                   </label>
                   <textarea
-                    required
+                    name="message"
                     value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    rows={6}
-                    className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-accent outline-none text-lg resize-none"
+                    onChange={handleInputChange}
+                    required
+                    rows="5"
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all resize-none"
                     placeholder="Tell me about your project, goals, timeline, and any specific requirements..."
                   />
                 </div>
 
-                {status === 'error' && (
-                  <div className="flex items-center gap-2 text-red-600 bg-red-50 p-4 rounded-xl">
-                    <AlertCircle size={20} />
-                    <span>{message}</span>
-                  </div>
+                {/* Status Messages */}
+                {submitStatus === 'success' && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="bg-green-50 border-2 border-green-500 rounded-xl p-4 flex items-center gap-3"
+                  >
+                    <Check size={24} className="text-green-500" />
+                    <span className="text-green-700 font-semibold">Request submitted successfully! I'll contact you soon.</span>
+                  </motion.div>
                 )}
 
+                {submitStatus === 'error' && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="bg-red-50 border-2 border-red-500 rounded-xl p-4 flex items-center gap-3"
+                  >
+                    <X size={24} className="text-red-500" />
+                    <span className="text-red-700 font-semibold">Failed to submit request. Please try again.</span>
+                  </motion.div>
+                )}
+
+                {/* Submit Button */}
                 <motion.button
                   type="submit"
-                  disabled={status === 'loading'}
+                  disabled={isSubmitting}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="w-full flex items-center justify-center gap-2 px-6 py-4 bg-accent text-white rounded-full font-semibold text-lg hover:bg-blue-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                  className={`w-full py-4 rounded-full font-bold text-lg bg-gradient-to-r ${selectedService?.color} text-white shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2`}
                 >
-                  {status === 'loading' ? 'Submitting...' : 'Submit Request'}
-                  <Send size={20} />
+                  {isSubmitting ? (
+                    <>
+                      <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+                        className="w-6 h-6 border-3 border-white border-t-transparent rounded-full"
+                      />
+                      Submitting...
+                    </>
+                  ) : (
+                    <>
+                      <Zap size={20} />
+                      Submit Request
+                    </>
+                  )}
                 </motion.button>
               </form>
-            )}
+            </motion.div>
           </motion.div>
-        </div>
-      )}
+        )}
+      </AnimatePresence>
     </>
   )
 }
