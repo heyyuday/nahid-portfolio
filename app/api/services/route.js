@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { submitServiceRequest } from '@/lib/supabase'
+import { createClient } from '@supabase/supabase-js'
 
 export async function POST(request) {
   try {
@@ -14,24 +14,40 @@ export async function POST(request) {
       )
     }
 
-    if (!email.includes('@')) {
+    // Create Supabase client
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    )
+
+    // Insert data
+    const { data, error } = await supabase
+      .from('service_requests')
+      .insert([{
+        name,
+        email,
+        service_type,
+        message,
+        status: 'pending'
+      }])
+      .select()
+
+    if (error) {
+      console.error('Supabase error:', error)
       return NextResponse.json(
-        { error: 'Please provide a valid email address' },
-        { status: 400 }
+        { error: error.message },
+        { status: 500 }
       )
     }
 
-    await submitServiceRequest(body)
-
     return NextResponse.json(
-      { message: 'Service request submitted successfully' },
+      { message: 'Request submitted successfully', data },
       { status: 200 }
     )
   } catch (error) {
-    console.error('Service request error:', error)
-    
+    console.error('API error:', error)
     return NextResponse.json(
-      { error: 'Failed to submit request. Please try again.' },
+      { error: 'Server error: ' + error.message },
       { status: 500 }
     )
   }

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { subscribeToNewsletter } from '@/lib/supabase'
+import { createClient } from '@supabase/supabase-js'
 
 export async function POST(request) {
   try {
@@ -12,24 +12,40 @@ export async function POST(request) {
       )
     }
 
-    await subscribeToNewsletter(email)
-
-    return NextResponse.json(
-      { message: 'Successfully subscribed to newsletter' },
-      { status: 200 }
+    // Create Supabase client
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
     )
-  } catch (error) {
-    console.error('Newsletter subscription error:', error)
-    
-    if (error.message.includes('already subscribed')) {
+
+    // Insert data
+    const { data, error } = await supabase
+      .from('newsletter_subscribers')
+      .insert([{ email }])
+      .select()
+
+    if (error) {
+      if (error.code === '23505') {
+        return NextResponse.json(
+          { error: 'This email is already subscribed' },
+          { status: 409 }
+        )
+      }
+      console.error('Supabase error:', error)
       return NextResponse.json(
-        { error: 'This email is already subscribed' },
-        { status: 409 }
+        { error: error.message },
+        { status: 500 }
       )
     }
 
     return NextResponse.json(
-      { error: 'Failed to subscribe. Please try again.' },
+      { message: 'Successfully subscribed', data },
+      { status: 200 }
+    )
+  } catch (error) {
+    console.error('API error:', error)
+    return NextResponse.json(
+      { error: 'Server error: ' + error.message },
       { status: 500 }
     )
   }
