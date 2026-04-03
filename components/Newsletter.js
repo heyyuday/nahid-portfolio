@@ -1,12 +1,11 @@
 'use client'
 
 import { useState } from 'react'
-import { motion } from 'framer-motion'
 import { Mail, CheckCircle, AlertCircle } from 'lucide-react'
 
 export default function Newsletter() {
   const [email, setEmail] = useState('')
-  const [status, setStatus] = useState('idle') // idle, loading, success, error
+  const [status, setStatus] = useState('idle')
   const [message, setMessage] = useState('')
 
   const handleSubmit = async (e) => {
@@ -42,63 +41,45 @@ export default function Newsletter() {
   }
 
   return (
-    <section className="section-padding bg-primary text-white">
-      <div className="container-custom">
-        <div className="max-w-3xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+    <section className="py-24 px-6 bg-gray-900 text-white">
+      <div className="max-w-3xl mx-auto text-center">
+        <Mail size={48} className="mx-auto mb-6 text-blue-500" />
+        <h2 className="text-4xl md:text-5xl font-bold mb-4">
+          Stay Updated
+        </h2>
+        <p className="text-xl text-gray-300 mb-8">
+          Get the latest stories, updates, and exclusive content delivered straight to your inbox.
+        </p>
+
+        <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto">
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Enter your email"
+            required
+            disabled={status === 'loading'}
+            className="flex-1 px-6 py-4 rounded-full text-gray-900 outline-none text-lg disabled:opacity-50"
+          />
+          <button
+            type="submit"
+            disabled={status === 'loading'}
+            className="px-8 py-4 bg-blue-600 text-white rounded-full font-medium hover:bg-blue-700 disabled:opacity-50"
           >
-            <Mail size={48} className="mx-auto mb-6 text-accent" />
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Stay Updated
-            </h2>
-            <p className="text-xl text-gray-300 mb-8">
-              Get the latest stories, updates, and exclusive content delivered straight to your inbox.
-            </p>
+            {status === 'loading' ? 'Subscribing...' : 'Subscribe'}
+          </button>
+        </form>
 
-            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto">
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email"
-                required
-                disabled={status === 'loading'}
-                className="flex-1 px-6 py-4 rounded-full text-primary outline-none text-lg disabled:opacity-50"
-              />
-              <motion.button
-                type="submit"
-                disabled={status === 'loading'}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="btn-primary bg-accent disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
-              >
-                {status === 'loading' ? 'Subscribing...' : 'Subscribe'}
-              </motion.button>
-            </form>
+        {message && (
+          <div className={`mt-6 flex items-center justify-center gap-2 ${status === 'success' ? 'text-green-400' : 'text-red-400'}`}>
+            {status === 'success' ? <CheckCircle size={20} /> : <AlertCircle size={20} />}
+            <span>{message}</span>
+          </div>
+        )}
 
-            {/* Status Messages */}
-            {message && (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className={`mt-6 flex items-center justify-center gap-2 ${
-                  status === 'success' ? 'text-green-400' : 'text-red-400'
-                }`}
-              >
-                {status === 'success' ? <CheckCircle size={20} /> : <AlertCircle size={20} />}
-                <span>{message}</span>
-              </motion.div>
-            )}
-
-            <p className="text-sm text-gray-400 mt-6">
-              We respect your privacy. Unsubscribe at any time.
-            </p>
-          </motion.div>
-        </div>
+        <p className="text-sm text-gray-400 mt-6">
+          We respect your privacy. Unsubscribe at any time.
+        </p>
       </div>
     </section>
   )

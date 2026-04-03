@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import { useState } from 'react'
 import Link from 'next/link'
 import { Calendar, Clock, ArrowRight, Search } from 'lucide-react'
-import Newsletter from '@/components/Newsletter'
+import Newsletter from '../../components/Newsletter'
 
 export default function Blog() {
   const [searchTerm, setSearchTerm] = useState('')

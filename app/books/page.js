@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useState } from 'react'
-import BookCard from '@/components/BookCard'
+import BookCard from '../../components/BookCard'
 import { Search, SlidersHorizontal } from 'lucide-react'
 
 export default function Books() {

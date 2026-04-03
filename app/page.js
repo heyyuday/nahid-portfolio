@@ -4,8 +4,8 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
 import { BookOpen, Briefcase, ArrowRight, Award, Users, TrendingUp } from 'lucide-react'
-import Newsletter from '@/components/Newsletter'
-import BookCard from '@/components/BookCard'
+import Newsletter from '../components/Newsletter'
+import BookCard from '../components/BookCard'
 
 export default function Home() {
   // Sample data - replace with actual data from CMS or database

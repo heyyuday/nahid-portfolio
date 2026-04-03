@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useState } from 'react'
-import ServiceCard from '@/components/ServiceCard'
+import ServiceCard from '../../components/ServiceCard'
 import { Pen, Megaphone, TrendingUp, Send, CheckCircle, AlertCircle, X } from 'lucide-react'
 
 export default function Services() {
