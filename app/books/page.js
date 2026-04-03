@@ -345,7 +345,7 @@ export default function Books() {
               </p>
 
               <div className="flex gap-4">
-                
+                <a
                   href="https://www.goodreads.com/author/show/29731524.Nahid_Ashraf_Uday"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -354,7 +354,7 @@ export default function Books() {
                   <Star size={20} />
                   Goodreads Profile
                 </a>
-                
+                <a
                   href="/about"
                   className="inline-flex items-center gap-2 px-6 py-3 border-2 border-primary text-primary rounded-full font-semibold hover:bg-primary hover:text-white transition-all"
                 >
